@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from .llm.base import LLMProvider
 from .llm.ollama import OllamaProvider
+from .llm.template import TemplateProvider, generate_analysis
 from .llm.prompts import build_analysis_prompt
 from .pdf import chunk_text, extract_text_from_url
 from ..models.update import RegulatoryUpdate, AIAnalysis
@@ -12,10 +13,23 @@ CHUNK_OVERLAP = 200
 _provider: LLMProvider | None = None
 
 
+def _ollama_available() -> bool:
+    try:
+        import requests
+        from ..config import settings
+        r = requests.get(f"{settings.ollama_url}/api/tags", timeout=2)
+        return r.status_code == 200
+    except Exception:
+        return False
+
+
 def get_provider() -> LLMProvider:
     global _provider
     if _provider is None:
-        _provider = OllamaProvider()
+        if _ollama_available():
+            _provider = OllamaProvider()
+        else:
+            _provider = TemplateProvider()
     return _provider
 
 
@@ -71,37 +85,37 @@ def analyse_update(update: RegulatoryUpdate, db: Session) -> AIAnalysis | None:
 
     provider = get_provider()
 
-    # Get document text — prefer already-stored raw_text, else fetch PDF
-    doc_text = update.raw_text or ""
-    if not doc_text and update.pdf_url:
+    # Template provider: generate directly from structured metadata — no text fetch needed
+    if isinstance(provider, TemplateProvider):
+        result = generate_analysis(
+            title=update.title,
+            regulator=update.regulator,
+            source_type=update.source_type,
+            org=_org_profile(org),
+        )
+    else:
+        # Ollama / real LLM path
+        doc_text = update.raw_text or ""
+        if not doc_text and update.pdf_url:
+            try:
+                doc_text = extract_text_from_url(update.pdf_url)
+                update.raw_text = doc_text
+                db.add(update)
+            except Exception:
+                pass
+        if not doc_text:
+            doc_text = f"Title: {update.title}\nSource: {update.page_url}"
+        processed_text = chunk_and_summarise(doc_text, provider)
+        org_docs = _org_docs_text(db, org.id)
+        prompt = build_analysis_prompt(processed_text, _org_profile(org), org_docs)
+        analysis_schema = {
+            "summary": "string", "applicability": "string",
+            "conclusion": "string", "implementation": "array", "risk_level": "string",
+        }
         try:
-            doc_text = extract_text_from_url(update.pdf_url)
-            update.raw_text = doc_text
-            db.add(update)
+            result = provider.generate_structured(prompt, analysis_schema)
         except Exception:
-            pass
-
-    if not doc_text:
-        doc_text = f"Title: {update.title}\nSource: {update.page_url}"
-
-    # Chunk and summarise if needed
-    processed_text = chunk_and_summarise(doc_text, provider)
-
-    org_docs = _org_docs_text(db, org.id)
-    prompt = build_analysis_prompt(processed_text, _org_profile(org), org_docs)
-
-    analysis_schema = {
-        "summary": "string",
-        "applicability": "string",
-        "conclusion": "string",
-        "implementation": "array",
-        "risk_level": "string",
-    }
-
-    try:
-        result = provider.generate_structured(prompt, analysis_schema)
-    except Exception:
-        return None
+            return None
 
     analysis = AIAnalysis(
         update_id=update.id,
