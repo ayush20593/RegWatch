@@ -59,12 +59,19 @@ def fetch_and_store(org_id: int, db: Session) -> int:
         try:
             candidates = fetch_with_retry(parser)
             new_count = 0
+            seen_this_run: set[str] = set()
             for c in candidates:
                 if not _is_safe_url(c.page_url):
                     continue
+                # Must have a real title (not a nav/UI element)
+                if not c.title or len(c.title) < 10:
+                    continue
                 uid = stable_id(c.regulator, c.title, c.page_url, c.date)
-                exists = db.get(RegulatoryUpdate, uid)
-                if exists:
+                # Deduplicate within this run AND against DB
+                if uid in seen_this_run:
+                    continue
+                seen_this_run.add(uid)
+                if db.get(RegulatoryUpdate, uid):
                     continue
                 update = RegulatoryUpdate(
                     id=uid,
@@ -82,9 +89,14 @@ def fetch_and_store(org_id: int, db: Session) -> int:
             run.updates_found = new_count
             total_new += new_count
         except Exception as e:
-            run.error_message = str(e)
+            db.rollback()
+            run.error_message = str(e)[:500]
         finally:
             from datetime import datetime
             run.completed_at = datetime.utcnow()
-        db.commit()
+        try:
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            run.error_message = str(e)[:500]
     return total_new
