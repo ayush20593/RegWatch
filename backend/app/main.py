@@ -1,8 +1,17 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import auth
+from .routers import auth, updates, admin
 
-app = FastAPI(title="RegWatch API", version="0.1.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    from .services.scheduler import start_scheduler, stop_scheduler
+    start_scheduler()
+    yield
+    stop_scheduler()
+
+
+app = FastAPI(title="RegWatch API", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -13,6 +22,8 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(updates.router)
+app.include_router(admin.router)
 
 
 @app.get("/health")
