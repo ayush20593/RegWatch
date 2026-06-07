@@ -1,0 +1,38 @@
+[
+  {
+    "regulator": "RBI",
+    "source_type": "Notifications",
+    "url": "https://www.rbi.org.in/Scripts/NotificationUser.aspx",
+    "enabled": true
+  },
+  {
+    "regulator": "RBI",
+    "source_type": "Circulars",
+    "url": "https://www.rbi.org.in/scripts/bs_circularindexdisplay.aspx",
+    "enabled": true
+  },
+  {
+    "regulator": "SEBI",
+    "source_type": "Circulars",
+    "url": "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=1&ssid=7&smid=0",
+    "enabled": true
+  },
+  {
+    "regulator": "IRDAI",
+    "source_type": "Circulars",
+    "url": "https://irdai.gov.in/circulars",
+    "enabled": true
+  },
+  {
+    "regulator": "IRDAI",
+    "source_type": "Notifications",
+    "url": "https://irdai.gov.in/notifications",
+    "enabled": true
+  },
+  {
+    "regulator": "MCA",
+    "source_type": "Notices and Circulars",
+    "url": "https://www.mca.gov.in/content/mca/global/en/home.html",
+    "enabled": true
+  }
+]

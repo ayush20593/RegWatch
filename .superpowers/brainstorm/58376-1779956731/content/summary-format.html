@@ -1,0 +1,99 @@
+<h2>Summary Format</h2>
+<p class="subtitle">Same content — three different ways to present it. Which is easiest to scan?</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>TL;DR + Expandable Full Summary</h3>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">2-line plain-English headline up front. Full detail hidden behind "Read more" — there when you need it, out of the way when you don't.</p>
+      <div style="background:#0a0a1a;border:1px solid #1e1b4b;border-radius:8px;padding:16px;font-size:13px">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#4338ca;font-weight:600;margin-bottom:10px">Summary</div>
+        <!-- TL;DR -->
+        <div style="background:#1e1b4b;border-radius:6px;padding:12px;margin-bottom:10px">
+          <div style="font-size:10px;color:#818cf8;font-weight:700;letter-spacing:1px;margin-bottom:6px">TL;DR</div>
+          <div style="color:#e2e8f0;font-size:13.5px;line-height:1.6;font-weight:500">RBI requires all NBFCs to remove 7 delisted entries from their sanctions screening databases immediately. This is an update to an existing KYC obligation — no new policy changes needed.</div>
+        </div>
+        <!-- Expandable -->
+        <div style="border:1px dashed #312e81;border-radius:6px;padding:10px">
+          <div style="color:#818cf8;font-size:12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+            <span>Full analysis (8 sentences)</span>
+            <span>▼ Read more</span>
+          </div>
+          <div style="color:#64748b;font-size:11px;margin-top:8px;line-height:1.6;display:none">The Reserve Bank of India has issued an update under the Master Direction on Know Your Customer (KYC), 2016, specifically addressing amendments to the UNSC 1267/1989 Consolidated Sanctions List...</div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Fastest to scan</li><li>Full depth still accessible</li><li>Works for quick daily review</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Requires AI to generate two outputs (TL;DR + full)</li><li>Users may skip the full summary</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Structured Bullets + Brief Intro <span style="color:#6ee7b7;font-size:12px;margin-left:6px;">★ Recommended</span></h3>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">1–2 sentence context-setter, then 4–5 scannable bullets covering What, Who, Why, Deadline, Risk. Full depth without the wall of text.</p>
+      <div style="background:#0a0a1a;border:1px solid #1e1b4b;border-radius:8px;padding:16px;font-size:13px">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#4338ca;font-weight:600;margin-bottom:10px">Summary</div>
+        <p style="color:#94a3b8;font-size:13px;line-height:1.6;margin:0 0 12px">RBI has amended the Master Direction on KYC to reflect the latest UNSC sanctions list update, requiring regulated entities to immediately remove 7 delisted entries from their screening databases.</p>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="background:#312e81;color:#818cf8;font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;font-weight:700">WHAT</span>
+            <span style="color:#c7d2fe;font-size:13px;line-height:1.5">Removal of 7 UNSC-delisted individuals from the ISIL / Al-Qaida consolidated sanctions list, effective immediately.</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="background:#312e81;color:#818cf8;font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;font-weight:700">WHO</span>
+            <span style="color:#c7d2fe;font-size:13px;line-height:1.5">All NBFCs, commercial banks, UCBs, RRBs, and other RBI-regulated entities with KYC / sanctions screening obligations.</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="background:#312e81;color:#818cf8;font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;font-weight:700">WHY</span>
+            <span style="color:#c7d2fe;font-size:13px;line-height:1.5">Under Section 51A of UAPA 1967, entities must mirror UNSC list changes in real time. Continued blocking of delisted persons is itself a compliance failure.</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="background:#450a0a;color:#fca5a5;font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;font-weight:700">DEADLINE</span>
+            <span style="color:#c7d2fe;font-size:13px;line-height:1.5">Immediate — no grace period specified. Database update and compliance log entry required within days of circular date.</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <span style="background:#451a03;color:#fcd34d;font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px;font-weight:700">IMPACT</span>
+            <span style="color:#c7d2fe;font-size:13px;line-height:1.5">Operational only — update your screening vendor or internal DB. No new policy or product changes required.</span>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Eyes go straight to what matters</li><li>No information lost</li><li>AI can structure output as JSON labels</li><li>Scales well — longer items just add bullets</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Slightly more AI prompt complexity</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Short Paragraphs with Micro-Labels</h3>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">Full prose but broken into 3 short labelled paragraphs: Context · Obligation · Impact. Feels more like a legal brief, easier to skim than one block.</p>
+      <div style="background:#0a0a1a;border:1px solid #1e1b4b;border-radius:8px;padding:16px;font-size:13px">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#4338ca;font-weight:600;margin-bottom:12px">Summary</div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:10px;color:#818cf8;font-weight:700;letter-spacing:1px;margin-bottom:5px">CONTEXT</div>
+          <p style="color:#c7d2fe;font-size:13px;line-height:1.65;margin:0">RBI has updated the Master Direction on KYC 2016 to reflect the latest UNSC sanctions list changes. Seven individuals previously listed under the ISIL / Al-Qaida sanctions regime have been officially delisted by the UN Security Council, and the RBI is requiring all regulated entities to mirror this update immediately.</p>
+        </div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:10px;color:#818cf8;font-weight:700;letter-spacing:1px;margin-bottom:5px">OBLIGATION</div>
+          <p style="color:#c7d2fe;font-size:13px;line-height:1.65;margin:0">Under Section 51A of the UAPA 1967, NBFCs and all RBI-regulated entities are mandated to maintain real-time alignment with UNSC sanctions lists. Failure to remove delisted entries is itself a compliance violation — potentially causing wrongful blocking of legitimate customers. No new policies are introduced; this is an operational update to an existing control.</p>
+        </div>
+        <div>
+          <div style="font-size:10px;color:#818cf8;font-weight:700;letter-spacing:1px;margin-bottom:5px">IMPACT</div>
+          <p style="color:#c7d2fe;font-size:13px;line-height:1.65;margin:0">The action required is limited to updating your sanctions screening database and evidencing the change in your compliance register. No product, process, or policy changes are needed. Priority is immediate — there is no stated grace period in the circular.</p>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Familiar to legal/compliance readers</li><li>Full prose — no information compressed</li><li>Easy to scan with labels</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Still text-heavy vs. B</li><li>Less structured for quick daily triage</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

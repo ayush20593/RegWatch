@@ -158,6 +158,54 @@ def trigger_fetch(org_id: int, current_user: User = Depends(get_current_user), d
     return {"new_updates": new_count}
 
 
+@router.post("/orgs/{org_id}/reanalyze")
+def reanalyze_all(org_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Delete all existing analyses and regenerate with the current org profile."""
+    if current_user.org_id != org_id:
+        raise HTTPException(status_code=403, detail="Access denied")
+    from ..models.update import RegulatoryUpdate, AIAnalysis
+    from ..services.analyzer import generate_analysis, _org_profile
+    from ..models.org import Organisation
+    from datetime import datetime
+
+    org = db.get(Organisation, org_id)
+    if not org:
+        raise HTTPException(status_code=404, detail="Org not found")
+
+    # Delete all existing analyses for this org
+    db.query(AIAnalysis).filter(AIAnalysis.org_id == org_id).delete()
+    db.commit()
+
+    # Regenerate for every update
+    updates = db.query(RegulatoryUpdate).filter(RegulatoryUpdate.org_id == org_id).all()
+    profile = _org_profile(org)
+    count = 0
+    for u in updates:
+        try:
+            result = generate_analysis(
+                title=u.title,
+                regulator=u.regulator,
+                source_type=u.source_type,
+                org=profile,
+            )
+            analysis = AIAnalysis(
+                update_id=u.id,
+                org_id=org_id,
+                summary=result.get("summary", ""),
+                applicability=result.get("applicability", ""),
+                conclusion=result.get("conclusion", ""),
+                implementation_json=result.get("implementation", []),
+                risk_level=result.get("risk_level", "Low"),
+                generated_at=datetime.utcnow(),
+            )
+            db.add(analysis)
+            count += 1
+        except Exception:
+            pass
+    db.commit()
+    return {"regenerated": count}
+
+
 @router.post("/orgs/{org_id}/documents", status_code=201)
 async def upload_document(
     org_id: int,
@@ -183,6 +231,72 @@ async def upload_document(
     db.commit()
     db.refresh(doc)
     return {"id": doc.id, "filename": doc.filename}
+
+
+@router.get("/orgs/{org_id}/digest/preview")
+def preview_digest(
+    org_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    from ..services.digest import build_digest_html
+    from ..models.update import RegulatoryUpdate, AIAnalysis
+    from datetime import datetime
+    from fastapi.responses import HTMLResponse
+
+    if current_user.org_id != org_id:
+        raise HTTPException(status_code=403, detail="Access denied")
+    org = db.get(Organisation, org_id)
+    if not org:
+        raise HTTPException(status_code=404, detail="Not found")
+
+    updates_with_analysis = (
+        db.query(RegulatoryUpdate, AIAnalysis)
+        .outerjoin(AIAnalysis, RegulatoryUpdate.id == AIAnalysis.update_id)
+        .filter(RegulatoryUpdate.org_id == org_id)
+        .order_by(RegulatoryUpdate.detected_at.desc())
+        .limit(20)
+        .all()
+    )
+    date_str = datetime.utcnow().strftime("%d %b %Y")
+    html = build_digest_html(org, updates_with_analysis, date_str)
+    if not html:
+        return HTMLResponse("<p style='font-family:sans-serif;color:#888'>No updates to show in digest.</p>")
+    return HTMLResponse(html)
+
+
+@router.post("/orgs/{org_id}/digest/send")
+def send_digest_now(
+    org_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    from ..services.digest import send_digest
+    from ..config import settings
+
+    if current_user.org_id != org_id:
+        raise HTTPException(status_code=403, detail="Access denied")
+    org = db.get(Organisation, org_id)
+    if not org:
+        raise HTTPException(status_code=404, detail="Not found")
+    ds = db.query(DigestSettings).filter(DigestSettings.org_id == org_id).first()
+    if not ds:
+        raise HTTPException(status_code=404, detail="Digest settings not configured")
+
+    if not settings.brevo_api_key:
+        raise HTTPException(
+            status_code=400,
+            detail="BREVO_API_KEY not configured. Add it to your .env file to enable email sending."
+        )
+    if not settings.sender_email:
+        raise HTTPException(
+            status_code=400,
+            detail="SENDER_EMAIL not configured. Add it to your .env file."
+        )
+
+    send_digest(org, ds, db)
+    recipients = [e.strip() for e in ds.recipient_emails.split(",") if e.strip()]
+    return {"ok": True, "sent_to": recipients}
 
 
 @router.delete("/orgs/{org_id}/documents/{doc_id}")

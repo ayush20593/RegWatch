@@ -3,6 +3,7 @@ import { useAuth } from "./hooks/useAuth";
 import { LoginPage } from "./pages/LoginPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { AdminPage } from "./pages/AdminPage";
+import { ReportsPage } from "./pages/ReportsPage";
 import { Layout } from "./components/Layout";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -25,6 +26,7 @@ export default function App() {
         }
       >
         <Route index element={<DashboardPage />} />
+        <Route path="reports" element={<ReportsPage />} />
         <Route path="admin" element={<AdminPage />} />
       </Route>
     </Routes>

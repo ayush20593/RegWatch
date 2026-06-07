@@ -61,7 +61,7 @@ export function LoginPage() {
             disabled={login.isPending}
             style={{
               width: "100%", background: colors.accent, border: "none", borderRadius: 6,
-              color: colors.bg, fontWeight: 600, fontSize: 14, padding: "11px", cursor: "pointer",
+              color: "#ffffff", fontWeight: 600, fontSize: 14, padding: "11px", cursor: "pointer",
             }}
           >
             {login.isPending ? "Signing in..." : "Sign in"}

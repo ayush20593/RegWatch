@@ -22,42 +22,64 @@ function groupByDate(items: RegulatoryUpdate[]): { label: string; items: Regulat
   yesterday.setDate(now.getDate() - 1);
   const yesterdayStr = yesterday.toDateString();
 
-  const groups: Record<string, RegulatoryUpdate[]> = {};
+  const groups: { label: string; items: RegulatoryUpdate[] }[] = [];
+  const seenLabels = new Map<string, (typeof groups)[0]>();
+
   for (const item of items) {
-    const d = new Date(item.detected_at);
-    const ds = d.toDateString();
+    // Use regulatory publish date when available, fall back to scrape date
+    const raw = item.date || item.detected_at;
+    const dValid = parseDateSafe(raw) ?? new Date(item.detected_at);
+    const ds = dValid.toDateString();
+
     let label: string;
     if (ds === todayStr) label = "Today";
     else if (ds === yesterdayStr) label = "Yesterday";
-    else {
-      const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000);
-      if (diffDays < 7) label = "Earlier this week";
-      else if (diffDays < 30) label = "Earlier this month";
-      else label = d.toLocaleDateString("en-IN", { month: "long", year: "numeric" });
-    }
-    if (!groups[label]) groups[label] = [];
-    groups[label].push(item);
-  }
+    else label = dValid.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 
-  const order = ["Today", "Yesterday", "Earlier this week", "Earlier this month"];
-  const sorted = Object.entries(groups).sort(([a], [b]) => {
-    const ai = order.indexOf(a);
-    const bi = order.indexOf(b);
-    if (ai !== -1 && bi !== -1) return ai - bi;
-    if (ai !== -1) return -1;
-    if (bi !== -1) return 1;
-    return 0;
-  });
-  return sorted.map(([label, items]) => ({ label, items }));
+    if (!seenLabels.has(label)) {
+      const group = { label, items: [] as RegulatoryUpdate[] };
+      groups.push(group);
+      seenLabels.set(label, group);
+    }
+    seenLabels.get(label)!.items.push(item);
+  }
+  return groups;
+}
+
+function parseDateSafe(d: string | null | undefined): Date | null {
+  if (!d) return null;
+  // Handle Indian DD.M.YYYY / DD.MM.YYYY dot format (e.g. "08.5.2026" = May 8)
+  // new Date() would misread this as August 5 (treating as M.D.YYYY)
+  const dotMatch = d.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (dotMatch) {
+    const [, day, month, year] = dotMatch.map(Number);
+    if (day >= 1 && day <= 31 && month >= 1 && month <= 12) {
+      return new Date(year, month - 1, day);
+    }
+  }
+  const t = new Date(d).getTime();
+  return isNaN(t) ? null : new Date(t);
+}
+
+function parseDate(d: string | null | undefined): number {
+  return parseDateSafe(d)?.getTime() ?? 0;
 }
 
 function sortItems(items: RegulatoryUpdate[], sort: SortKey): RegulatoryUpdate[] {
   const copy = [...items];
   if (sort === "date_desc") {
-    return copy.sort((a, b) => new Date(b.detected_at).getTime() - new Date(a.detected_at).getTime());
+    return copy.sort((a, b) => {
+      const pd = parseDate(b.date) - parseDate(a.date);
+      if (pd !== 0) return pd;
+      return new Date(b.detected_at).getTime() - new Date(a.detected_at).getTime();
+    });
   }
   if (sort === "date_asc") {
-    return copy.sort((a, b) => new Date(a.detected_at).getTime() - new Date(b.detected_at).getTime());
+    return copy.sort((a, b) => {
+      const pd = parseDate(a.date) - parseDate(b.date);
+      if (pd !== 0) return pd;
+      return new Date(a.detected_at).getTime() - new Date(b.detected_at).getTime();
+    });
   }
   if (sort === "risk") {
     const order: Record<string, number> = { High: 0, Medium: 1, Low: 2 };

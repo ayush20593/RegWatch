@@ -1,0 +1,145 @@
+<h2>Dashboard Layout</h2>
+<p class="subtitle">Three structural approaches for the main compliance dashboard. Click to select your preference.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Sidebar + Feed + Detail Panel</h3>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">Three-column command centre. Filters on left, live feed in centre, full AI analysis slides in on the right when you open an item.</p>
+      <div style="display:grid;grid-template-columns:90px 1fr 110px;gap:4px;height:130px;border:1px solid #334155;border-radius:6px;overflow:hidden;font-size:10px">
+        <div style="background:#0f172a;padding:8px;border-right:1px solid #1e293b">
+          <div style="background:#1e293b;border-radius:3px;padding:4px 6px;margin-bottom:4px;color:#6ee7b7">⊞ Dashboard</div>
+          <div style="padding:4px 6px;margin-bottom:4px;color:#64748b">▤ Updates</div>
+          <div style="padding:4px 6px;margin-bottom:4px;color:#64748b">✉ Digest</div>
+          <div style="padding:4px 6px;color:#64748b">⚙ Settings</div>
+          <div style="margin-top:10px;padding-top:8px;border-top:1px solid #1e293b">
+            <div style="color:#475569;font-size:9px">FILTERS</div>
+            <div style="margin-top:4px;background:#1e293b;border-radius:3px;padding:3px 5px;font-size:9px;color:#94a3b8">RBI ✓</div>
+            <div style="margin-top:2px;background:#1e293b;border-radius:3px;padding:3px 5px;font-size:9px;color:#94a3b8">SEBI ✓</div>
+          </div>
+        </div>
+        <div style="background:#0a0f1a;padding:8px;overflow:hidden">
+          <div style="background:#0f172a;border-radius:4px;padding:6px;margin-bottom:5px;border-left:2px solid #f87171">
+            <div style="color:#f87171;font-size:9px">HIGH RISK · RBI · Circular</div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:2px">Master Direction on KYC 2025</div>
+          </div>
+          <div style="background:#0f172a;border-radius:4px;padding:6px;margin-bottom:5px;border-left:2px solid #fbbf24">
+            <div style="color:#fbbf24;font-size:9px">MEDIUM · SEBI · Guideline</div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:2px">MCR Format Revision May 2026</div>
+          </div>
+          <div style="background:#0f172a;border-radius:4px;padding:6px;border-left:2px solid #6ee7b7">
+            <div style="color:#6ee7b7;font-size:9px">LOW · IRDAI · Notification</div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:2px">Motor Insurance Circular Update</div>
+          </div>
+        </div>
+        <div style="background:#0f172a;padding:8px;border-left:1px solid #1e293b;overflow:hidden">
+          <div style="color:#6ee7b7;font-size:9px">AI ANALYSIS</div>
+          <div style="color:#94a3b8;font-size:8px;margin-top:4px;line-height:1.5">Summary: This circular mandates...</div>
+          <div style="background:#1e293b;border-radius:3px;padding:3px;margin-top:5px;font-size:8px;color:#e2e8f0">✓ Applicable to your NBFC</div>
+          <div style="background:#1e293b;border-radius:3px;padding:3px;margin-top:3px;font-size:8px;color:#e2e8f0">📋 3 action items</div>
+          <div style="background:#1e293b;border-radius:3px;padding:3px;margin-top:3px;font-size:8px;color:#e2e8f0">📅 Due: Jun 30</div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Everything visible at once</li><li>No page navigation needed</li><li>Feels like a pro compliance tool</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Cramped on smaller screens</li><li>More complex to build</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Top Nav + Card Feed</h3>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">Clean top navigation with a full-width metrics strip, then scrollable card feed below. Clicking a card opens a full-page detail view.</p>
+      <div style="border:1px solid #334155;border-radius:6px;overflow:hidden;font-size:10px">
+        <div style="background:#0f172a;padding:6px 10px;border-bottom:1px solid #1e293b;display:flex;gap:12px;align-items:center">
+          <span style="color:#6ee7b7;font-weight:bold">RegWatch</span>
+          <span style="color:#94a3b8">Dashboard</span>
+          <span style="color:#94a3b8">Updates</span>
+          <span style="color:#94a3b8">Digest</span>
+          <span style="margin-left:auto;color:#94a3b8">⚙</span>
+        </div>
+        <div style="background:#0a0f1a;padding:8px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px">
+            <div style="background:#0f172a;border-radius:4px;padding:6px;text-align:center"><div style="font-size:16px;color:#e2e8f0;font-weight:bold">12</div><div style="color:#64748b;font-size:8px">Today</div></div>
+            <div style="background:#0f172a;border-radius:4px;padding:6px;text-align:center"><div style="font-size:16px;color:#f87171;font-weight:bold">4</div><div style="color:#64748b;font-size:8px">High Risk</div></div>
+            <div style="background:#0f172a;border-radius:4px;padding:6px;text-align:center"><div style="font-size:16px;color:#fbbf24;font-weight:bold">7</div><div style="color:#64748b;font-size:8px">Unreviewed</div></div>
+            <div style="background:#0f172a;border-radius:4px;padding:6px;text-align:center"><div style="font-size:16px;color:#6ee7b7;font-weight:bold">3</div><div style="color:#64748b;font-size:8px">Regulators</div></div>
+          </div>
+          <div style="background:#0f172a;border-radius:4px;padding:7px;margin-bottom:5px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#f87171;font-size:9px">HIGH · RBI · Circular</span><span style="color:#64748b;font-size:9px">May 22</span></div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:2px">Master Direction on KYC 2025 — Applicable to your NBFC</div>
+          </div>
+          <div style="background:#0f172a;border-radius:4px;padding:7px">
+            <div style="display:flex;justify-content:space-between"><span style="color:#fbbf24;font-size:9px">MED · SEBI · Guideline</span><span style="color:#64748b;font-size:9px">May 19</span></div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:2px">MCR Format Revision — Review recommended</div>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Simple, familiar pattern</li><li>Works great on laptop screens</li><li>Easier to build</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Requires navigation to see analysis</li><li>Less "command centre" feel</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Sidebar Nav + Full Detail Modal <span style="color:#6ee7b7;font-size:12px;margin-left:6px;">★ Recommended</span></h3>
+      <p style="font-size:13px;color:#94a3b8;margin-bottom:12px">Left sidebar for navigation + filters. Full-width feed. Clicking any item opens a rich full-screen modal with the entire AI analysis — no layout cramping.</p>
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:4px;height:130px;border:1px solid #334155;border-radius:6px;overflow:hidden;font-size:10px">
+        <div style="background:#0f172a;padding:8px;border-right:1px solid #1e293b">
+          <div style="color:#6ee7b7;font-size:9px;font-weight:bold;margin-bottom:8px">RegWatch</div>
+          <div style="background:#1e293b;border-radius:3px;padding:4px 6px;margin-bottom:3px;color:#6ee7b7;font-size:9px">Dashboard</div>
+          <div style="padding:4px 6px;margin-bottom:3px;color:#64748b;font-size:9px">Updates</div>
+          <div style="padding:4px 6px;margin-bottom:3px;color:#64748b;font-size:9px">Digest</div>
+          <div style="padding:4px 6px;color:#64748b;font-size:9px">Settings</div>
+          <div style="margin-top:8px;padding-top:6px;border-top:1px solid #1e293b">
+            <div style="color:#475569;font-size:8px;margin-bottom:3px">REGULATOR</div>
+            <div style="font-size:8px;color:#6ee7b7">▪ RBI</div>
+            <div style="font-size:8px;color:#6ee7b7">▪ SEBI</div>
+            <div style="font-size:8px;color:#6ee7b7">▪ IRDAI</div>
+          </div>
+        </div>
+        <div style="background:#0a0f1a;padding:8px">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px">
+            <div style="background:#0f172a;border-radius:4px;padding:5px;text-align:center"><div style="font-size:14px;color:#e2e8f0;font-weight:bold">12</div><div style="color:#64748b;font-size:8px">Updates</div></div>
+            <div style="background:#0f172a;border-radius:4px;padding:5px;text-align:center"><div style="font-size:14px;color:#f87171;font-weight:bold">4</div><div style="color:#64748b;font-size:8px">High Risk</div></div>
+            <div style="background:#0f172a;border-radius:4px;padding:5px;text-align:center"><div style="font-size:14px;color:#fbbf24;font-weight:bold">7</div><div style="color:#64748b;font-size:8px">Unreviewed</div></div>
+          </div>
+          <div style="background:#0f172a;border-radius:4px;padding:6px;margin-bottom:4px;cursor:pointer;border:1px solid transparent">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <span style="background:#7f1d1d;color:#fca5a5;font-size:8px;padding:1px 5px;border-radius:10px">HIGH RISK</span>
+                <span style="color:#64748b;font-size:8px;margin-left:5px">RBI · Circular · May 22</span>
+              </div>
+              <span style="color:#94a3b8;font-size:9px">→</span>
+            </div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:3px">Master Direction on KYC 2025</div>
+            <div style="color:#6ee7b7;font-size:8px;margin-top:2px">✓ Applicable · 3 action items pending</div>
+          </div>
+          <div style="background:#0f172a;border-radius:4px;padding:6px;border:1px solid transparent">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <span style="background:#78350f;color:#fcd34d;font-size:8px;padding:1px 5px;border-radius:10px">MEDIUM</span>
+                <span style="color:#64748b;font-size:8px;margin-left:5px">SEBI · Guideline · May 19</span>
+              </div>
+              <span style="color:#94a3b8;font-size:9px">→</span>
+            </div>
+            <div style="color:#e2e8f0;font-size:10px;margin-top:3px">MCR Format Revision</div>
+            <div style="color:#94a3b8;font-size:8px;margin-top:2px">Needs review</div>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top:10px">
+        <div class="pros"><h4>Pros</h4><ul><li>Best of A and B</li><li>Full screen for rich AI analysis modal</li><li>Filters always visible, never hidden</li><li>Scales to any screen size</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Modal adds one click to see analysis</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

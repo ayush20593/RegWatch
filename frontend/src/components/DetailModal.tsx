@@ -101,7 +101,7 @@ export function DetailModal({ update, onClose }: Props) {
                   ))}
                 </Section>
 
-                <Section title="Applicability to Your Organisation">
+                <Section title="Applicability to Lendingkart Finance Limited">
                   <BlockCard accentColor={colors.accent}>
                     <p style={{ color: colors.textMuted, fontSize: 13, lineHeight: 1.65, margin: 0 }}>{analysis.applicability}</p>
                   </BlockCard>

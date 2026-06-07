@@ -49,7 +49,7 @@ def list_updates(
     regulator: list[str] = Query(default=[]),
     risk_level: list[str] = Query(default=[]),
     status: str = Query(default="all"),
-    limit: int = Query(default=50, le=200),
+    limit: int = Query(default=200, le=500),
     offset: int = Query(default=0),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),

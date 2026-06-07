@@ -15,8 +15,9 @@ interface Props {
 }
 
 const navItems = [
-  { to: "/", label: "Dashboard" },
-  { to: "/admin", label: "Admin" },
+  { to: "/", label: "Dashboard", icon: "◈" },
+  { to: "/reports", label: "Reports", icon: "⊞" },
+  { to: "/admin", label: "Admin", icon: "⚙" },
 ];
 
 export function Sidebar({ filters, onFiltersChange }: Props) {
@@ -28,6 +29,7 @@ export function Sidebar({ filters, onFiltersChange }: Props) {
         minWidth: 240,
         background: colors.surface,
         borderRight: `1px solid ${colors.border}`,
+        boxShadow: "2px 0 8px rgba(0,0,0,0.04)",
         display: "flex",
         flexDirection: "column",
         height: "100vh",
@@ -48,19 +50,23 @@ export function Sidebar({ filters, onFiltersChange }: Props) {
           <NavLink
             key={item.to}
             to={item.to}
-            end
+            end={item.to === "/"}
             style={({ isActive }) => ({
-              display: "block",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
               padding: "8px 12px",
               borderRadius: 6,
               fontSize: 13,
               fontWeight: 500,
               color: isActive ? colors.accent : colors.textMuted,
-              background: isActive ? colors.border : "transparent",
+              background: isActive ? colors.accentBg : "transparent",
               textDecoration: "none",
               marginBottom: 2,
+              borderLeft: isActive ? `3px solid ${colors.accent}` : "3px solid transparent",
             })}
           >
+            <span style={{ fontSize: 14 }}>{item.icon}</span>
             {item.label}
           </NavLink>
         ))}

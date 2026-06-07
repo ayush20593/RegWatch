@@ -1,0 +1,72 @@
+<h2>MVP Feature Map</h2>
+<p class="subtitle">Confirm what's in. Everything else goes to Phase 2.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
+
+  <div style="border:1px solid #2d3748;border-radius:10px;padding:18px;background:#0f172a">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#6ee7b7;margin-bottom:10px">Module 1 — Data Pipeline</div>
+    <ul style="margin:0;padding:0 0 0 16px;font-size:14px;line-height:2">
+      <li>Scrape RBI, SEBI, IRDAI, MCA on a configurable schedule</li>
+      <li>Deduplicate, extract text from PDFs</li>
+      <li>Store in DB (PostgreSQL) per org</li>
+      <li>Admin can set fetch frequency (hourly / every 6h / daily)</li>
+    </ul>
+  </div>
+
+  <div style="border:1px solid #2d3748;border-radius:10px;padding:18px;background:#0f172a">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#6ee7b7;margin-bottom:10px">Module 2 — AI Analysis Engine</div>
+    <ul style="margin:0;padding:0 0 0 16px;font-size:14px;line-height:2">
+      <li><strong>Summary</strong> — 3–5 sentence plain English summary</li>
+      <li><strong>Applicability</strong> — Does this apply to your org? Why?</li>
+      <li><strong>Conclusion</strong> — What does this mean for you?</li>
+      <li><strong>Action Items</strong> — What to do, suggested owner, by when</li>
+      <li>Powered by Ollama/Llama locally (upgradeable)</li>
+    </ul>
+  </div>
+
+  <div style="border:1px solid #2d3748;border-radius:10px;padding:18px;background:#0f172a">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#6ee7b7;margin-bottom:10px">Module 3 — Dashboard</div>
+    <ul style="margin:0;padding:0 0 0 16px;font-size:14px;line-height:2">
+      <li>Live feed of regulatory updates</li>
+      <li>Filter by regulator, document type, risk level, date</li>
+      <li>Per-update expandable card with full AI analysis</li>
+      <li>Mark as reviewed / assign to team member</li>
+      <li>Summary metrics (total today, high risk, unreviewed)</li>
+    </ul>
+  </div>
+
+  <div style="border:1px solid #2d3748;border-radius:10px;padding:18px;background:#0f172a">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#6ee7b7;margin-bottom:10px">Module 4 — Daily Email Digest</div>
+    <ul style="margin:0;padding:0 0 0 16px;font-size:14px;line-height:2">
+      <li>One email every morning at configurable time</li>
+      <li>Groups updates by Regulator → Document Type</li>
+      <li>Each item: summary + applicability + action items</li>
+      <li>Links to full analysis in dashboard</li>
+      <li>Configurable recipient list per org</li>
+    </ul>
+  </div>
+
+  <div style="border:1px solid #2d3748;border-radius:10px;padding:18px;background:#0f172a">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#6ee7b7;margin-bottom:10px">Module 5 — Org Onboarding</div>
+    <ul style="margin:0;padding:0 0 0 16px;font-size:14px;line-height:2">
+      <li>Structured profile: NBFC type, product lines, AUM, geography</li>
+      <li>Optional document upload (RBI certificate, compliance manual)</li>
+      <li>Admin creates org manually (no self-serve for MVP)</li>
+      <li>Single login per org for MVP</li>
+    </ul>
+  </div>
+
+  <div style="border:1px solid #1e293b;border-radius:10px;padding:18px;background:#0a0f1a;opacity:0.6">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#64748b;margin-bottom:10px">Phase 2 (not in MVP)</div>
+    <ul style="margin:0;padding:0 0 0 16px;font-size:14px;line-height:2;color:#64748b">
+      <li>AI Query Assistant ("Is this allowed?")</li>
+      <li>Multi-user + role management</li>
+      <li>Self-serve signup + billing</li>
+      <li>Audit trail / compliance log export</li>
+      <li>Custom source configuration</li>
+    </ul>
+  </div>
+
+</div>
+
+<p style="margin-top:20px;font-size:14px;color:#94a3b8">Does this feature set look right? Any module you want to add, remove, or change?</p>

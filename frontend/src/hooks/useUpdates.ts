@@ -15,7 +15,7 @@ export function useUpdates(filters: Filters = {}) {
   if (filters.regulator) filters.regulator.forEach((r) => params.append("regulator", r));
   if (filters.risk_level) filters.risk_level.forEach((r) => params.append("risk_level", r));
   if (filters.status && filters.status !== "all") params.set("status", filters.status);
-  if (filters.limit) params.set("limit", String(filters.limit));
+  params.set("limit", String(filters.limit ?? 200));
   if (filters.offset) params.set("offset", String(filters.offset));
 
   return useQuery<UpdatesResponse>({

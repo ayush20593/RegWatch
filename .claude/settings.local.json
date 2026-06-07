@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash *)",
+      "Bash(curl -s http://localhost:56614/)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git -C /Users/ayushkumar/Downloads/compliance-agent config user.email \"ayush.kumar1@iifl.com\")",
+      "Bash(git -C /Users/ayushkumar/Downloads/compliance-agent config user.name \"Ayush Kumar\")",
+      "Bash(python3 -c \"from app.config import settings; print\\(settings.database_url\\)\")",
+      "Bash(python3 -m pytest tests/test_config.py -v)",
+      "Bash(python3 *)"
+    ]
+  }
+}

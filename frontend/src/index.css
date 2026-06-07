@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  background: #0a0a1a;
-  color: #e2e8f0;
+  background: #F8FAFD;
+  color: #0F172A;
   font-family: Inter, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -16,7 +16,7 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #1e1b4b transparent;
+  scrollbar-color: #CBD5E1 transparent;
 }
 
 ::-webkit-scrollbar {
@@ -26,7 +26,7 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e1b4b;
+  background: #CBD5E1;
   border-radius: 3px;
 }
 
